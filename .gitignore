@@ -1,8 +1,11 @@
-# ignore
-.DS_Store
-Library/
-ProjectSettings/
+# Unity
 Temp/
+Obj/
+UnityGenerated/
+Library/
+
+# MacOS
+.DS_Store
 
 # Prerequisites
 *.d
