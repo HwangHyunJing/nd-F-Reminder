@@ -1,3 +1,10 @@
+# ignore
+*.meta
+.DS_Store
+Library/
+ProjectSettings/
+Temp/
+
 # Prerequisites
 *.d
 
