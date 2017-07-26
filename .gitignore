@@ -3,6 +3,8 @@ Temp/
 Obj/
 UnityGenerated/
 Library/
+Assembly-CSharp.csproj
+Reminder.sln
 
 # MacOS
 .DS_Store
