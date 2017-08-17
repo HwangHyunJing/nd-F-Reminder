@@ -19,6 +19,7 @@ public class Moving_4 : MonoBehaviour
 
     bool isJumping = false;
     bool allowJump = false;
+    bool passed = false;
 
     public int score; // 여기서 이제 먹는 것 추가
 
@@ -51,33 +52,37 @@ public class Moving_4 : MonoBehaviour
         }
    }
 
-    void OnCollisionExit2D(Collision2D other) //
+    void OnCollisionExit2D(Collision2D other)
     {
         if(other.gameObject.tag == "blocks")
             allowJump = false;
     }
 
-    void OnCollisionEnter2D(Collision2D other) //
+    void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "blocks")
         {
             allowJump = true;
             isJumping = false;
         }
-
-
-
     }
 
-    void OnTriggerEnter2D(Collider2D other) //
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("MemPiece"))
+        if (!passed)
         {
-            ScoreManager.setScore();
-            other.gameObject.SetActive(false);
-        }
-    }
+            
+            if (other.gameObject.CompareTag("MemPiece"))
+            {
+                passed = true;
+                ScoreManager.setScore();
+                other.gameObject.SetActive(false);
+            }
 
+
+        }
+
+    }
 
     void FixedUpdate()
     {
@@ -85,7 +90,10 @@ public class Moving_4 : MonoBehaviour
         Jump();
     }
 
-
+    void LateUpdate()
+    {
+        passed = false;
+    }
 
     void Run()
     {
