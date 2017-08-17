@@ -65,19 +65,19 @@ public class Moving_4 : MonoBehaviour
             isJumping = false;
         }
 
-        
+
+
     }
 
     void OnTriggerEnter2D(Collider2D other) //
     {
         if (other.gameObject.CompareTag("MemPiece"))
         {
+            ScoreManager.setScore();
             other.gameObject.SetActive(false);
-            ScoreManager.setScore(); // 
-
-            Destroy(other.gameObject, 0f); //
         }
     }
+
 
     void FixedUpdate()
     {
