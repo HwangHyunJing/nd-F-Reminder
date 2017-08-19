@@ -4,39 +4,34 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class SwitchAction : MonoBehaviour {
+public class SwitchAction : MonoBehaviour
+{
+    public Sprite CurrentSprite;
+    public Sprite NextSprite;
+    private SpriteRenderer spriteRenderer;
 
-
-    //static Sprite sprite;
-
-    public SpriteRenderer AAA;
-    public Sprite r_switch_f;
-    public Sprite r_switch_t;
-
-	// Use this for initialization
-	void Start ()
+    
+    void Start ()
     {
-        AAA = gameObject.GetComponent<SpriteRenderer>();
-        // SpriteRenderer.sprite = r_switch_t;
-	}
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = CurrentSprite;
+    }
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Update ()
+    {
 
+    }
 
-    static public void Press(char color)
+    public void Press(char color)
     {
         switch(color)
         {
             case 'r':
-                AAA.sprite = SwitchAction.r_switch_t;
+                spriteRenderer.sprite = NextSprite;
                 break;
             default:
                 break;
-        }
-
-        
+        }  
     }
 }

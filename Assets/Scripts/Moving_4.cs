@@ -24,10 +24,7 @@ public class Moving_4 : MonoBehaviour
 
     public int score; // 여기서 이제 먹는 것 추가
 
-    //static 
-    //static 
-    static public char r;
-
+    public char r;
 
 
     void Awake()
@@ -130,7 +127,7 @@ public class Moving_4 : MonoBehaviour
 
     void Jump()
     {
-
+        
         if (isJumping == false)
             return;
 
