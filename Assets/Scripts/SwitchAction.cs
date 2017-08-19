@@ -7,14 +7,21 @@ using UnityEngine.UI;
 public class SwitchAction : MonoBehaviour
 {
     public Sprite CurrentSprite;
+    //
+    //
     public Sprite NextSprite;
+    //
+    //
     private SpriteRenderer spriteRenderer;
+    //
+    //
 
     
     void Start ()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = CurrentSprite;
+
     }
 	
 	// Update is called once per frame
@@ -24,11 +31,14 @@ public class SwitchAction : MonoBehaviour
     }
 
     public void Press(char color)
+        //
+        //
     {
         switch(color)
         {
             case 'r':
                 spriteRenderer.sprite = NextSprite;
+
                 break;
             default:
                 break;

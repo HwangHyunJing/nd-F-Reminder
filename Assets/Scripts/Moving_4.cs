@@ -25,12 +25,15 @@ public class Moving_4 : MonoBehaviour
     public int score; // 여기서 이제 먹는 것 추가
 
     public char r;
+    //
+    //
 
 
     void Awake()
     {
         rb2D = GetComponent<Rigidbody2D>();
         render = gameObject.GetComponentInChildren<SpriteRenderer>();
+
     }
 
     void Start()
@@ -87,7 +90,7 @@ public class Moving_4 : MonoBehaviour
             if (other.gameObject.CompareTag("switch"))
             {
                 pressed = true;
-                SwitchAction.Press(r); // 
+                other.gameObject.GetComponent<SwitchAction>().Press('r');
             }
         }
 
