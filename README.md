@@ -1,5 +1,5 @@
 # nd-F-Reminder
-여름 갬마루 공모전!!
+Reminder - switch-coloring
 
 스위치의 기능 중 "특정 색깔의 물체를 활성화/비활성화시킨다." 는 기능을 구현할 브렌치입니다.
 
