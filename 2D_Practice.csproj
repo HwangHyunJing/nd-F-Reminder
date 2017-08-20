@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\ChangeRed.cs" />
     <Compile Include="Assets\Scripts\CharCamera.cs" />
     <Compile Include="Assets\Scripts\Moving_3.cs" />
     <Compile Include="Assets\Scripts\Moving_4.cs" />

@@ -9,6 +9,9 @@ public class Moving_4 : MonoBehaviour
     public float movePower = 1f;
     public float jumpPower = 1f;
 
+    public GameObject R_on; // 처음에는 exist 상태인 것
+    public GameObject R_off; // 처음에는 non exist 상태인 것
+
     float horizontalMove;
     float verticalMove;
 
@@ -21,12 +24,12 @@ public class Moving_4 : MonoBehaviour
     bool allowJump = false;
     bool passed = false;
     bool pressed = false;
+    static bool r_state;
 
     public int score; // 여기서 이제 먹는 것 추가
 
     public char r;
-    //
-    //
+
 
 
     void Awake()
@@ -41,6 +44,8 @@ public class Moving_4 : MonoBehaviour
         rb2D = gameObject.GetComponent<Rigidbody2D>();
         render = gameObject.GetComponentInChildren<SpriteRenderer>();
         Cursor.visible = false; // 사라져라 마우스야!
+
+        
     }
 
     void Update()
@@ -71,6 +76,12 @@ public class Moving_4 : MonoBehaviour
             allowJump = true;
             isJumping = false;
         }
+
+        else if (other.gameObject.tag == "r1")
+        {
+            allowJump = true;
+            isJumping = false;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -91,6 +102,8 @@ public class Moving_4 : MonoBehaviour
             {
                 pressed = true;
                 other.gameObject.GetComponent<SwitchAction>().Press('r');
+                r_state = !r_state;
+                other.gameObject.GetComponent<ChangeRed>().r_chn(r_state);
             }
         }
 
@@ -124,7 +137,7 @@ public class Moving_4 : MonoBehaviour
             render.flipX = false;
             moveVelocity = Vector3.right;
         }
-        transform.position += moveVelocity * movePower * Time.deltaTime/1f; // 여기서 움직이는 정도 변경
+        transform.position += moveVelocity * movePower * Time.deltaTime/1f;
 
     }
 
@@ -148,6 +161,11 @@ public class Moving_4 : MonoBehaviour
 
         }
 
+    }
+
+    static public void SendStatement(bool state)
+    {
+        r_state = state;
     }
 
 
