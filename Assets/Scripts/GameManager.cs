@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour {
 		foreach (GameObject block in blocks) {
 			block.SetActive (true);
 			block.SendMessage ("SwitchTrigger", colorCode);
-			Debug.Log (block);
 		}
 
 	}

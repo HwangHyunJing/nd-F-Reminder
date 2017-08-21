@@ -41,12 +41,15 @@ public class Player_Move : MonoBehaviour
 			else // if jump is not allowed
 				return;
 		}
-		if (Input.GetButtonDown ("Fire1")) {
-			GameManager.ChangeInactiveColor (1);
+
+		// 테스트를 위한 임시 추가
+		if (Input.GetButtonDown ("Fire1")) { // left ctrl
+			GameManager.ChangeInactiveColor (1); // 빨간색 물체 비활성화
 		}
-		if (Input.GetButtonDown ("Fire2")) {
-			GameManager.ChangeInactiveColor (2);
+		if (Input.GetButtonDown ("Fire2")) { // left alt
+			GameManager.ChangeInactiveColor (2); // 파란색 물체 비활성화
 		}
+		// 여기까지
 	}
 
 	void OnCollisionExit2D(Collision2D other)
