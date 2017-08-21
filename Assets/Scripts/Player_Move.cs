@@ -8,8 +8,6 @@ public class Player_Move : MonoBehaviour
 	public float movePower = 1f;
 	public float jumpPower = 1f;
 
-	public GameManager gameManager;
-
 	float horizontalMove;
 	float verticalMove;
 
@@ -23,15 +21,9 @@ public class Player_Move : MonoBehaviour
 
 
 
-	void Awake()
-	{
-		rb2D = GetComponent<Rigidbody2D>();
-		render = gameObject.GetComponentInChildren<SpriteRenderer>();
-	}
 
 	void Start()
 	{
-		GameManager.GetInstance ().PutLog ();
 		rb2D = gameObject.GetComponent<Rigidbody2D>();
 		render = gameObject.GetComponentInChildren<SpriteRenderer>();
 	}
@@ -48,6 +40,12 @@ public class Player_Move : MonoBehaviour
 				isJumping = true; // able to jump
 			else // if jump is not allowed
 				return;
+		}
+		if (Input.GetButtonDown ("Fire1")) {
+			GameManager.ChangeInactiveColor (1);
+		}
+		if (Input.GetButtonDown ("Fire2")) {
+			GameManager.ChangeInactiveColor (2);
 		}
 	}
 

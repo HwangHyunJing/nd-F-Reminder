@@ -2,23 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : ScriptableObject {
+public class GameManager : MonoBehaviour {
 
-	private static GameManager _instance = (GameManager)CreateInstance ("GameManager");
-
-	enum OBJECT_COLOR { NULL, RED, BLUE };
-
-	private int inactive_color = (int)OBJECT_COLOR.NULL;
+	private static GameObject[] blocks;
 
 
-	private GameManager() {
+	void Start() {
+
+		blocks = GameObject.FindGameObjectsWithTag ("Block");
+
 	}
 
-	public static GameManager GetInstance() {
-		return _instance;
-	}
 
-	public void PutLog() {
-		Debug.Log ("YES");
+	public static void ChangeInactiveColor(int colorCode) {
+		
+		foreach (GameObject block in blocks) {
+			block.SetActive (true);
+			block.SendMessage ("SwitchTrigger", colorCode);
+			Debug.Log (block);
+		}
+
 	}
 }

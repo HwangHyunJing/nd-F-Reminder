@@ -1,0 +1,36 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Block : MonoBehaviour {
+
+	public int color;
+
+	// Use this for initialization
+	void Start () {
+		
+		Renderer renderer = GetComponent<Renderer> ();
+
+		switch (color) {
+		case 0:
+			renderer.material.color = new Color (24 / 255, 25 / 255, 24 / 255);
+			break;
+
+		case 1:
+			renderer.material.color = new Color (119 / 255f, 35 / 255f, 66 / 255f);
+			break;
+
+		case 2:
+			renderer.material.color = new Color (5 / 255f, 65 / 255f, 126 / 255f);
+			break;
+		}
+
+	}
+
+
+	public void SwitchTrigger(int colorCode) {
+
+		gameObject.SetActive (color != colorCode);
+
+	}
+}
