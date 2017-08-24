@@ -32,7 +32,7 @@ public class y_doorAction : MonoBehaviour {
             // puppet.transform.position.x = DoorPosition.x;          
         }
 
-        else if (other.gameObject.CompareTag("y_door_B"))
+        if (other.gameObject.CompareTag("y_door_B"))
         {
             DoorPosition.x = DoorA.transform.position.x;
             DoorPosition.y = DoorA.transform.position.y;

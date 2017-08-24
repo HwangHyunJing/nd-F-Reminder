@@ -134,6 +134,26 @@ public class MovePuppet : MonoBehaviour {
         }
     }
 
+    public void OnTriggerStay2D(Collider2D other)
+    {
+        if (!entered)
+        {
+            if (other.gameObject.CompareTag("y_door_A"))
+            {
+                entered = true;
+                Door = other;
+                ScoreManager.Announce();
+
+            }
+            else if (other.gameObject.CompareTag("y_door_B"))
+            {
+                entered = true;
+                Door = other;
+                ScoreManager.Announce();
+            }
+        }
+    }
+
     public void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("y_door_A"))
@@ -162,8 +182,14 @@ public class MovePuppet : MonoBehaviour {
     {
         passed = false;
         pressed = false;
-        entered = false;
+        // entered = false;
         // Door = null;
+    }
+
+    void OnGUI()
+    {
+        //GUILayout.Label("Score : " + score.ToString());
+        GUILayout.Label("                           " + entered.ToString() );
     }
 
     void Run()
