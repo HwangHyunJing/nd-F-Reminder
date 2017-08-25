@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour {
 
-
     static int score = 0;
+    public static int get = 0;
 
-    public static void setScore()
+    public static void Announce()
+    {
+        get++;
+    }
+
+    /*public static void setScore()
     {
         score += 1;
     }
@@ -15,10 +20,11 @@ public class ScoreManager : MonoBehaviour {
     public static int getScore()
     {
         return score;
-    }
+    }*/
 
     void OnGUI()
     {
-        GUILayout.Label("Score : " + score.ToString());
+        //GUILayout.Label("Score : " + score.ToString());
+        GUILayout.Label("Announcement:" + get.ToString());
     }
 }
