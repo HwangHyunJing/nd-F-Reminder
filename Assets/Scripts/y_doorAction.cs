@@ -7,14 +7,18 @@ public class y_doorAction : MonoBehaviour {
     public GameObject DoorA;
     public GameObject DoorB;
 
+    public Collider2D doorCollider;
 
-    // public GameObject Player; // 실제 케릭터
-    // Vector2 CharPosition; // 케릭터 위치
+    public bool OriginDoor;
+
+    public SpriteRenderer spriterenderer;
+    public Sprite origin;
+    public Sprite reversed;
+
+
     Vector2 DoorPosition; // 문 위치
 
-    // public bool inDoor = false;
 
-    // Use this for initialization
     void Start()
     {
         DoorA = GameObject.FindWithTag("y_door_A");
@@ -42,10 +46,16 @@ public class y_doorAction : MonoBehaviour {
         return DoorPosition;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Change()
     {
-        // GameObject puppet = gameObject.GetComponent<Moving_4>().puppet;
+        doorCollider.enabled = !OriginDoor;
+        spriterenderer.sprite = reversed;
+    }
+
+    public void Restart_y_doorAction()
+    {
+        doorCollider.enabled = OriginDoor;
+        spriterenderer.sprite = origin;
     }
 
 

@@ -87,7 +87,9 @@
     <Compile Include="Assets\Scripts\memAction.cs" />
     <Compile Include="Assets\Scripts\r_changeAction.cs" />
     <Compile Include="Assets\Scripts\r_switchAction.cs" />
+    <Compile Include="Assets\Scripts\y_changeAction.cs" />
     <Compile Include="Assets\Scripts\y_doorAction.cs" />
+    <Compile Include="Assets\Scripts\y_switchAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

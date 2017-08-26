@@ -5,6 +5,8 @@ using UnityEngine;
 public class colliderAction : MonoBehaviour {
 
     public Collider2D Itself;
+
+    public bool originCollider;
     
     // Use this for initialization
 	void Start () {
@@ -18,11 +20,11 @@ public class colliderAction : MonoBehaviour {
 
     public void Change()
     {
-        Itself.enabled = false;
+        Itself.enabled = !originCollider;
     }
 
     public void Restart_colliderAction()
     {
-        Itself.enabled = true;
+        Itself.enabled = originCollider;
     }
 }
