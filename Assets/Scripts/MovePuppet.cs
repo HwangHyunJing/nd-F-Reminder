@@ -14,15 +14,21 @@ public class MovePuppet : MonoBehaviour {
     float horizontalMove;
     // float verticalMove;
 
+    public int r_1_block_boundary;
+    public int b_1_block_boundary;
 
     public Vector3 movement;
     public Rigidbody2D rb2D;
     public Collider2D Door;
-    public Collider2D r_collider;
-    // public GameObject[] Mem_Reset;
-    public GameObject[] r_1_block;
-    public GameObject Red_Collider;
-    public GameObject Red_Switch;
+    public Collider2D r_collider; //
+    public Collider2D b_collider;
+    // public GameObject[] Mem_Reset; 
+    public GameObject[] r_1_block; //
+    public GameObject[] b_1_block;
+    public GameObject Red_Collider; //
+    public GameObject Blue_Collider;
+    public GameObject Red_Switch; //
+    public GameObject Blue_Switch;
     
 
     public SpriteRenderer render;
@@ -41,7 +47,7 @@ public class MovePuppet : MonoBehaviour {
 
     public int score; // 여기서 이제 먹는 것 추가
 
-    public char r;
+    public int i;
 
 
     
@@ -51,8 +57,10 @@ public class MovePuppet : MonoBehaviour {
     {
         rb2D = GetComponent<Rigidbody2D>();
         render = gameObject.GetComponentInChildren<SpriteRenderer>();
-        r_1_block = GameObject.FindGameObjectsWithTag("r_1_block");
+        r_1_block = GameObject.FindGameObjectsWithTag("r_1_block"); // 
+        b_1_block = GameObject.FindGameObjectsWithTag("b_1_block");
         Mem = GameObject.FindGameObjectsWithTag("MemPiece");
+
     }
 
     void Start()
@@ -99,32 +107,35 @@ public class MovePuppet : MonoBehaviour {
             isJumping = false;
         }
 
-        if (other.gameObject.tag == "r1")
-        {
-            allowJump = true;
-            isJumping = false;
-        }
-
-        if (other.gameObject.tag == "DeathPoint")
+        if (other.gameObject.tag == "DeathPoint") //
         {
             Restart_MovePuppet();
+
             Red_Switch.GetComponent<r_switchAction>().Restart_r_switchAction();
             Red_Collider.GetComponent<colliderAction>().Restart_colliderAction();
+            for (i = 0; i <= r_1_block_boundary; i++)
+            {
+                r_1_block[i].GetComponent<r_changeAction>().Restart_r_changeAction();
+            }
+
+            Blue_Switch.GetComponent<b_switchAction>().Restart_b_switchAction();
+            Blue_Collider.GetComponent<colliderAction>().Restart_colliderAction();
+            for (i = 0; i <= b_1_block_boundary; i++)
+            {
+                b_1_block[i].GetComponent<b_changeAction>().Restart_b_changeAction();
+            }
+
             foreach (GameObject sign in Mem)
             {
                 sign.GetComponent<memAction>().Restart_memAction();
             }
-            foreach(GameObject sign in r_1_block)
-            {
-                sign.GetComponent<r_changeAction>().Restart_r_changeAction();
-            }
-
 
         }
     }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
+
         if (!passed)
         {
             if (other.gameObject.CompareTag("MemPiece"))
@@ -144,17 +155,48 @@ public class MovePuppet : MonoBehaviour {
             if (other.gameObject.CompareTag("r_switch"))
             {
                 pressed = true;
+
+                //
+                Blue_Switch.GetComponent<b_switchAction>().Restart_b_switchAction();
+                Blue_Collider.GetComponent<colliderAction>().Restart_colliderAction();
+                for (i = 0; i <= b_1_block_boundary; i++)
+                {
+                    b_1_block[i].GetComponent<b_changeAction>().Restart_b_changeAction();
+                }
+                //
+
+
                 other.gameObject.GetComponent<r_switchAction>().Press('r', other);
 
 
-                foreach(GameObject sign in r_1_block)
+                for (i = 0; i <= r_1_block_boundary; i++)
                 {
-                    sign.GetComponent<r_changeAction>().Change();
+                    r_1_block[i].GetComponent<r_changeAction>().Change();
                 }
                 r_collider.gameObject.GetComponent<colliderAction>().Change();
+            }
+            
+            if (other.gameObject.CompareTag("b_switch"))
+            {
+                pressed = true;
 
+                //
+                Red_Switch.GetComponent<r_switchAction>().Restart_r_switchAction();
+                Red_Collider.GetComponent<colliderAction>().Restart_colliderAction();
+                for (i = 0; i <= r_1_block_boundary; i++)
+                {
+                    r_1_block[i].GetComponent<r_changeAction>().Restart_r_changeAction();
+                }
+                //
 
-                // other.gameObject.GetComponent<ChangeRed>().r_chn(r_state);
+                other.gameObject.GetComponent<b_switchAction>().Press('b', other);
+
+                 for (i=0;i<=b_1_block_boundary;i++)
+                 {
+                    b_1_block[i].GetComponent<b_changeAction>().Change();
+                 }
+                 
+                b_collider.gameObject.GetComponent<colliderAction>().Change();
             }
         }
  
@@ -276,10 +318,10 @@ public class MovePuppet : MonoBehaviour {
 
     }
 
-    static public void SendStatement(bool state)
+    /*static public void SendStatement(bool state)
     {
         r_state = state;
-    }
+    }*/
 
     public void Restart_MovePuppet()
     {

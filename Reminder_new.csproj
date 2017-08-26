@@ -81,6 +81,8 @@
     <Compile Include="Assets\Scripts\CharCamera.cs" />
     <Compile Include="Assets\Scripts\MovePuppet.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\b_changeAction.cs" />
+    <Compile Include="Assets\Scripts\b_switchAction.cs" />
     <Compile Include="Assets\Scripts\colliderAction.cs" />
     <Compile Include="Assets\Scripts\memAction.cs" />
     <Compile Include="Assets\Scripts\r_changeAction.cs" />

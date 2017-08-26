@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class r_changeAction : MonoBehaviour {
+public class b_changeAction : MonoBehaviour {
 
     public Sprite origin;
     public Sprite reversed;
-    
+
     public SpriteRenderer spriterenderer;
 
 
@@ -20,12 +20,12 @@ public class r_changeAction : MonoBehaviour {
 
     }
 
-	public void Change()
+    public void Change()
     {
         spriterenderer.sprite = reversed;
     }
 
-    public void Restart_r_changeAction()
+    public void Restart_b_changeAction()
     {
         spriterenderer.sprite = origin;
     }
