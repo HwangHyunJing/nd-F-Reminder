@@ -31,6 +31,8 @@ public class MovePuppet : MonoBehaviour {
     public int r_block_num;
     public int b_block_num;
     public int y_block_num;
+    public int g_block_num;
+    public int v_block_num;
 
     public Vector3 movement;
     public Rigidbody2D rb2D;
@@ -44,11 +46,11 @@ public class MovePuppet : MonoBehaviour {
     public GameObject[] g_1_block; 
     public GameObject[] v_1_block;
 
-    public GameObject Red_Object; //
-    public GameObject Blue_Object;
+    public GameObject[] Red_Object; //
+    public GameObject[] Blue_Object;
     public GameObject[] Yellow_Object;
-    public GameObject Green_Object;
-    public GameObject Violet_Object;
+    public GameObject[] Green_Object;
+    public GameObject[] Violet_Object;
 
     public GameObject r_door_A;
     public GameObject r_door_B;
@@ -66,9 +68,6 @@ public class MovePuppet : MonoBehaviour {
     public SpriteRenderer render;
 
     public GameObject[] Mem;
-    // public Sprite Mem1;
-    // public Sprite Mem2;
-
 
     bool isJumping = false;
     bool allowJump = false;
@@ -89,13 +88,17 @@ public class MovePuppet : MonoBehaviour {
         rb2D = GetComponent<Rigidbody2D>();
         render = gameObject.GetComponentInChildren<SpriteRenderer>();
 
-        // ex) colorblockCODE = 11000
-
         if (rblock_exist)
+        {
             r_1_block = GameObject.FindGameObjectsWithTag("r_1_block");
+            Red_Object = GameObject.FindGameObjectsWithTag("r_collideObj");
+        }
 
         if (bblock_exist)
+        {
             b_1_block = GameObject.FindGameObjectsWithTag("b_1_block");
+            Blue_Object = GameObject.FindGameObjectsWithTag("b_collideObj");
+        }
 
         if (yblock_exist)
         {
@@ -104,10 +107,17 @@ public class MovePuppet : MonoBehaviour {
         }
 
         if (gblock_exist)
+        {
             g_1_block = GameObject.FindGameObjectsWithTag("g_1_block");
+            Green_Object = GameObject.FindGameObjectsWithTag("g_collideObj");
+        }
 
         if (vblock_exist)
+        {
             v_1_block = GameObject.FindGameObjectsWithTag("v_1_block");
+            Violet_Object = GameObject.FindGameObjectsWithTag("v_collideObj");
+        }
+
 
 
         if (rdoor_exist)
@@ -179,7 +189,11 @@ public class MovePuppet : MonoBehaviour {
             if(rblock_exist) Reset_Red_block();
             if(bblock_exist) Reset_Blue_block();
             if(yblock_exist) Reset_Yellow_block();
+            if (gblock_exist) Reset_Green_block();
+            if (vblock_exist) Reset_Violet_block();
 
+            if (rdoor_exist) Reset_Red_door();
+            if (bdoor_exist) Reset_Blue_door();
             if (ydoor_exist) Reset_Yellow_door();
 
             Reset_Mem();
@@ -188,6 +202,8 @@ public class MovePuppet : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("Finish"))
+            stage1to2.move1to2();
 
         if (!passed)
         {
@@ -209,11 +225,16 @@ public class MovePuppet : MonoBehaviour {
             {
                 pressed = true;
 
-                if(bblock_exist) Reset_Blue_block();
-                if(yblock_exist) Reset_Yellow_block();
+                if (bblock_exist) Reset_Blue_block();
+                if (bdoor_exist) Reset_Blue_door();
+                if (yblock_exist) Reset_Yellow_block();
                 if (ydoor_exist) Reset_Yellow_door();
+                if (gblock_exist) Reset_Green_block();
+                if (vblock_exist) Reset_Violet_block();
+                
 
-                if(rblock_exist)                Change_Red(other);
+                if (rblock_exist) Change_Red_block(other);
+                if (rdoor_exist) Change_Red_door();
             }
 
             
@@ -221,22 +242,63 @@ public class MovePuppet : MonoBehaviour {
             {
                 pressed = true;
 
-                if(rblock_exist) Reset_Red_block();
-                if(yblock_exist) Reset_Yellow_block();
+                if (rblock_exist) Reset_Red_block();
+                if (rdoor_exist) Reset_Red_door();
+                if (yblock_exist) Reset_Yellow_block();
                 if (ydoor_exist) Reset_Yellow_door();
+                if (gblock_exist) Reset_Green_block();
+                if (vblock_exist) Reset_Violet_block();
 
-                if(bblock_exist) Change_Blue(other);
+
+                if (bblock_exist) Change_Blue_block(other);
+                if (bdoor_exist) Change_Blue_door();
             }
 
             if (other.gameObject.CompareTag("y_switch"))
             {
                 pressed = true;
 
-                if(bblock_exist) Reset_Blue_block();
-                if(rblock_exist) Reset_Red_block();
+                if (rblock_exist) Reset_Red_block();
+                if (rdoor_exist) Reset_Red_door();
+                if (bblock_exist) Reset_Blue_block();
+                if (bdoor_exist) Reset_Blue_door();
+                if (gblock_exist) Reset_Green_block();
+                if (vblock_exist) Reset_Violet_block();
 
-                if(yblock_exist) Change_Yellow_block(other);
+
+                if (yblock_exist) Change_Yellow_block(other);
                 if (ydoor_exist) Change_Yellow_door ();
+            }
+
+            if (other.gameObject.CompareTag("g_switch"))
+            {
+                pressed = true;
+
+                if (rblock_exist) Reset_Red_block();
+                if (rdoor_exist) Reset_Red_door();
+                if (bblock_exist) Reset_Blue_block();
+                if (bdoor_exist) Reset_Blue_door();
+                if (yblock_exist) Reset_Yellow_block();
+                if (ydoor_exist) Reset_Yellow_door();
+                if (vblock_exist) Reset_Violet_block();
+
+
+                if (gblock_exist) Change_Green_block(other);
+            }
+
+            if (other.gameObject.CompareTag("v_switch"))
+            {
+                pressed = true;
+
+                if (rblock_exist) Reset_Red_block();
+                if (rdoor_exist) Reset_Red_door();
+                if (bblock_exist) Reset_Blue_block();
+                if (bdoor_exist) Reset_Blue_door();
+                if (yblock_exist) Reset_Yellow_block();
+                if (ydoor_exist) Reset_Yellow_door();
+                if (gblock_exist) Reset_Green_block();
+
+                if (vblock_exist) Change_Violet_block(other);
             }
 
         }
@@ -244,17 +306,39 @@ public class MovePuppet : MonoBehaviour {
     
         if (!entered)
         {
+            if (other.gameObject.CompareTag("r_door_A"))
+            {
+                entered = true;
+                Door = other;
+            }
+            else if (other.gameObject.CompareTag("r_door_B"))
+            {
+                entered = true;
+                Door = other;
+            }
+
+            
+            if (other.gameObject.CompareTag("b_door_A"))
+            {
+                entered = true;
+                Door = other;
+            }
+            else if (other.gameObject.CompareTag("b_door_B"))
+            {
+                entered = true;
+                Door = other;
+            }
+
+
             if (other.gameObject.CompareTag("y_door_A"))
             {
                 entered = true;
                 Door = other;
-                ScoreManager.Announce();
             }
             else if (other.gameObject.CompareTag("y_door_B"))
             {
                 entered = true;
                 Door = other;
-                ScoreManager.Announce();
             }
         }
     }
@@ -263,6 +347,28 @@ public class MovePuppet : MonoBehaviour {
     {
         if (!entered)
         {
+            if (other.gameObject.CompareTag("r_door_A"))
+            {
+                entered = true;
+                Door = other;
+            }
+            else if (other.gameObject.CompareTag("r_door_B"))
+            {
+                entered = true;
+                Door = other;
+            }
+
+            if (other.gameObject.CompareTag("b_door_A"))
+            {
+                entered = true;
+                Door = other;
+            }
+            else if (other.gameObject.CompareTag("b_door_B"))
+            {
+                entered = true;
+                Door = other;
+            }
+
             if (other.gameObject.CompareTag("y_door_A"))
             {
                 entered = true;
@@ -278,6 +384,28 @@ public class MovePuppet : MonoBehaviour {
 
     public void OnTriggerExit2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("r_door_A"))
+        {
+            entered = true;
+            Door = other;
+        }
+        else if (other.gameObject.CompareTag("r_door_B"))
+        {
+            entered = true;
+            Door = other;
+        }
+
+        if (other.gameObject.CompareTag("b_door_A"))
+        {
+            entered = true;
+            Door = other;
+        }
+        else if (other.gameObject.CompareTag("b_door_B"))
+        {
+            entered = true;
+            Door = other;
+        }
+
         if (other.gameObject.CompareTag("y_door_A"))
         {
             entered = false;
@@ -306,7 +434,7 @@ public class MovePuppet : MonoBehaviour {
 
     void OnGUI()
     {
-        GUILayout.Label("                           " + entered.ToString() );
+
     }
 
     void Run()
@@ -353,17 +481,8 @@ public class MovePuppet : MonoBehaviour {
 
     public void Restart_MovePuppet()
     {
-        // 케릭터 위치 초기화
-        // 변수 초기화
-        // 스위치 원상태
-        // 블럭 원상태: 이건 나중에
-        // 기억 조각 원상태
+        puppet.transform.position = new Vector3(0, 0, -0.5f);
 
-        // 케릭터 위치 초기화
-        puppet.transform.position = new Vector2(0, 0);
-
-        // 변수 초기화
-        // Time.timeScale = 0f;
         isJumping = false;
         allowJump = false;
         passed = false;
@@ -375,7 +494,10 @@ public class MovePuppet : MonoBehaviour {
     public void Reset_Red_block()
     {
         Red_Switch.GetComponent<r_switchAction>().Restart_r_switchAction();
-        Red_Object.GetComponent<colliderAction>().Restart_colliderAction();
+        for (i = 0; i <= r_block_num; i++)
+        {
+            Red_Object[i].GetComponent<colliderAction>().Restart_colliderAction();
+        }
         for (i = 0; i <= r_1_block_boundary; i++)
         {
             r_1_block[i].GetComponent<r_changeAction>().Restart_r_changeAction();
@@ -385,7 +507,12 @@ public class MovePuppet : MonoBehaviour {
     public void Reset_Blue_block()
     {
         Blue_Switch.GetComponent<b_switchAction>().Restart_b_switchAction();
-        Blue_Object.GetComponent<colliderAction>().Restart_colliderAction();
+
+        for (i = 0; i <= b_block_num; i++)
+        {
+            Blue_Object[i].GetComponent<colliderAction>().Restart_colliderAction();
+        }
+
         for (i = 0; i <= b_1_block_boundary; i++)
         {
             b_1_block[i].GetComponent<b_changeAction>().Restart_b_changeAction();
@@ -407,6 +534,50 @@ public class MovePuppet : MonoBehaviour {
         }
     }
 
+    public void Reset_Green_block()
+    {
+        Green_Switch.GetComponent<g_switchAction>().Restart_g_switchAction();
+
+        for (i = 0; i <= g_block_num; i++)
+        {
+            Green_Object[i].GetComponent<colliderAction>().Restart_colliderAction();
+        }
+
+        for (i = 0; i <= g_1_block_boundary; i++)
+        {
+            g_1_block[i].GetComponent<g_changeAction>().Restart_g_changeAction();
+        }
+    }
+
+    public void Reset_Violet_block()
+    {
+        Violet_Switch.GetComponent<v_switchAction>().Restart_v_switchAction();
+
+        for (i = 0; i <= v_block_num; i++)
+        {
+            Violet_Object[i].GetComponent<colliderAction>().Restart_colliderAction();
+        }
+
+        for (i = 0; i <= v_1_block_boundary; i++)
+        {
+            v_1_block[i].GetComponent<v_changeAction>().Restart_v_changeAction();
+        }
+    }
+
+    public void Reset_Red_door()
+    {
+        Red_Switch.GetComponent<r_switchAction>().Restart_r_switchAction();
+        r_door_A.GetComponent<r_doorAction>().Restart_r_doorAction();
+        r_door_B.GetComponent<r_doorAction>().Restart_r_doorAction();
+    }
+
+    public void Reset_Blue_door()
+    {
+        Blue_Switch.GetComponent<b_switchAction>().Restart_b_switchAction();
+        b_door_A.GetComponent<b_doorAction>().Restart_b_doorAction();
+        b_door_B.GetComponent<b_doorAction>().Restart_b_doorAction();
+    }
+
     public void Reset_Yellow_door()
     {
         Yellow_Switch.GetComponent<y_switchAction>().Restart_y_switchAction();
@@ -423,34 +594,40 @@ public class MovePuppet : MonoBehaviour {
     }
 
 
-    public void Change_Red(Collider2D other)
+    public void Change_Red_block(Collider2D other)
     {
         other.gameObject.GetComponent<r_switchAction>().Press('r', other);
         for (i = 0; i <= r_1_block_boundary; i++)
         {
             r_1_block[i].GetComponent<r_changeAction>().Change();
         }
-        Red_Object.GetComponent<colliderAction>().Change();
+        for (i = 0; i <= r_block_num; i++)
+        {
+            Red_Object[i].GetComponent<colliderAction>().Change();
+        }
     }
 
-    public void Change_Blue(Collider2D other)
+    public void Change_Blue_block(Collider2D other)
     {
         other.gameObject.GetComponent<b_switchAction>().Press('b', other);
         for (i = 0; i <= b_1_block_boundary; i++)
         {
             b_1_block[i].GetComponent<b_changeAction>().Change();
         }
-        Blue_Object.GetComponent<colliderAction>().Change();
+        for (i = 0; i <= b_block_num; i++)
+        {
+            Blue_Object[i].GetComponent<colliderAction>().Change();
+        }
     }
 
     public void Change_Yellow_block(Collider2D other)
     {
 
-            other.gameObject.GetComponent<y_switchAction>().Press('y', other);
-            for (i = 0; i <= y_1_block_boundary; i++)
-            {
-                y_1_block[i].GetComponent<y_changeAction>().Change();
-            }
+        other.gameObject.GetComponent<y_switchAction>().Press('y', other);
+        for (i = 0; i <= y_1_block_boundary; i++)
+        {
+            y_1_block[i].GetComponent<y_changeAction>().Change();
+        }
 
         for (i=0; i <= y_block_num; i++)
         {
@@ -458,8 +635,56 @@ public class MovePuppet : MonoBehaviour {
         }
             
     }
-        
-    
+
+    public void Change_Green_block(Collider2D other)
+    {
+
+        other.gameObject.GetComponent<g_switchAction>().Press('g', other);
+        for (i = 0; i <= g_1_block_boundary; i++)
+        {
+            g_1_block[i].GetComponent<g_changeAction>().Change();
+        }
+
+        for (i = 0; i <= g_block_num; i++)
+        {
+            Green_Object[i].GetComponent<colliderAction>().Change();
+        }
+
+    }
+
+    public void Change_Violet_block(Collider2D other)
+    {
+
+        other.gameObject.GetComponent<v_switchAction>().Press('v', other);
+        for (i = 0; i <= v_1_block_boundary; i++)
+        {
+            v_1_block[i].GetComponent<v_changeAction>().Change();
+        }
+
+        for (i = 0; i <= v_block_num; i++)
+        {
+            Violet_Object[i].GetComponent<colliderAction>().Change();
+        }
+
+    }
+
+
+    public void Change_Red_door()
+    {
+
+        r_door_A.GetComponent<r_doorAction>().Change();
+        r_door_B.GetComponent<r_doorAction>().Change();
+
+    }
+
+    public void Change_Blue_door()
+    {
+
+        b_door_A.GetComponent<b_doorAction>().Change();
+        b_door_B.GetComponent<b_doorAction>().Change();
+
+    }
+
     public void Change_Yellow_door()
     {
 

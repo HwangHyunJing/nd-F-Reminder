@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class b_switchAction : MonoBehaviour {
+public class g_switchAction : MonoBehaviour {
 
     public Sprite CurrentSprite;
     public Sprite NextSprite;
     private SpriteRenderer spriteRenderer;
 
 
-    public Collider2D b_Press;
+    public Collider2D g_Press;
 
 
     void Start()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = CurrentSprite;
-        b_Press = GetComponent<Collider2D>();
+        g_Press = GetComponent<Collider2D>();
     }
 
 
@@ -29,7 +29,7 @@ public class b_switchAction : MonoBehaviour {
     {
         switch (color)
         {
-            case 'b':
+            case 'g':
                 other.GetComponent<Collider2D>().enabled = false;
 
                 spriteRenderer.sprite = NextSprite;
@@ -40,9 +40,12 @@ public class b_switchAction : MonoBehaviour {
         }
     }
 
-    public void Restart_b_switchAction()
+    public void Restart_g_switchAction()
     {
         spriteRenderer.sprite = CurrentSprite;
-        b_Press.enabled = true;
+        g_Press.enabled = true;
     }
+
+
+
 }

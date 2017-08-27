@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class y_doorAction : MonoBehaviour {
+public class b_doorAction : MonoBehaviour {
 
     public GameObject DoorA;
     public GameObject DoorB;
@@ -21,20 +21,18 @@ public class y_doorAction : MonoBehaviour {
 
     void Start()
     {
-        DoorA = GameObject.FindWithTag("y_door_A");
-        DoorB = GameObject.FindWithTag("y_door_B");
+        DoorA = GameObject.FindWithTag("b_door_A");
+        DoorB = GameObject.FindWithTag("b_door_B");
     }
 
     public Vector3 DoorEnter(Collider2D other)
     {
-        if (other.gameObject.CompareTag("y_door_A"))
+        if (other.gameObject.CompareTag("b_door_A"))
         {
 
             DoorPosition.x = DoorB.transform.position.x;
             DoorPosition.y = DoorB.transform.position.y;
-            DoorPosition.z = -0.5f;
-
-            // puppet.transform.position.x = DoorPosition.x;          
+            DoorPosition.z = -0.5f;    
         }
 
         if (other.gameObject.CompareTag("y_door_B"))
@@ -53,11 +51,10 @@ public class y_doorAction : MonoBehaviour {
         spriterenderer.sprite = reversed;
     }
 
-    public void Restart_y_doorAction()
+    public void Restart_b_doorAction()
     {
         doorCollider.enabled = OriginDoor;
         spriterenderer.sprite = origin;
     }
-
 
 }
